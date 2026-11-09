@@ -42,4 +42,4 @@ No extra libraries are needed.
 2. Open **http://192.168.4.1/** to see the dashboard.
 3. To test the button, hold it for 1.5 s. The LED should start fast-blinking (re-learning).
 
-Wiring diagram: [images/wiring_real_board.png](images/wiring_real_board.png). Full details are in [HARDWARE.md](HARDWARE.md).
+Wiring diagram: [images/wiring_pins.png](images/wiring_pins.png) (soldered header) or [images/wiring_real_board.png](images/wiring_real_board.png) (Qwiic cable). Full details are in [HARDWARE.md](HARDWARE.md).

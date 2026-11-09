@@ -68,6 +68,22 @@ The SmartElex MPU-6050 comes with its 6-pin headers **loose** (not soldered) and
 
 The received cable's colours are black, red, green and yellow (green takes the place of Qwiic's usual blue). If the firmware reports no MPU6050, swap green and yellow: swapping the two I2C lines can't damage anything. Wiring picture: [images/wiring_real_board.png](images/wiring_real_board.png), drawn from [`wokwi/real_wiring/diagram.json`](../wokwi/real_wiring/diagram.json) (the 30-pin DevKit V1, wiring view only).
 
+#### With the 6-pin header soldered (9 Nov 2026)
+
+The header was later soldered on. Its pins are printed on the board as VIN, 3Vo, GND, SCL, SDA, INT. Connect them with male-to-female jumpers (female end on the sensor pin), or plug the board straight into the breadboard:
+
+| Sensor pin | ESP32 |
+|---|---|
+| VIN | 3V3 |
+| GND | GND |
+| SDA | GPIO 21 |
+| SCL | GPIO 22 |
+| 3Vo, INT | leave unconnected (3Vo is the board's own 3.3 V output, not an input) |
+
+Use either the header or the Qwiic cable, not both. Picture: [images/wiring_pins.png](images/wiring_pins.png).
+
+![Wiring with the soldered header](images/wiring_pins.png)
+
 ## Building and flashing (macOS, arduino-cli)
 
 The firmware needs no external libraries. It was verified on 9 Nov 2026 with arduino-cli 1.5.1 and esp32 core 3.3.12, and uses 74% of flash and 25% of RAM.
