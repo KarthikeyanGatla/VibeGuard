@@ -1,0 +1,12 @@
+# For the Wokwi VS Code extension / wokwi-cli. Build the firmware first with VG_SIM=1, for example:
+#   arduino-cli compile --fqbn esp32:esp32:esp32 --build-property "build.extra_flags=-DVG_SIM=1" \
+#     --output-dir wokwi/build firmware/VibeGuard
+[wokwi]
+version = 1
+firmware = "build/VibeGuard.ino.merged.bin"
+elf = "build/VibeGuard.ino.elf"
+
+# Open the dashboard at http://localhost:8180/ while the simulation runs.
+[[net.forward]]
+from = "localhost:8180"
+to = "target:80"

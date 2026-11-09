@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "author": "VibeGuard team",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+    { "type": "wokwi-mpu6050", "id": "imu", "top": -120, "left": 160, "attrs": {} },
+    { "type": "wokwi-led", "id": "led", "top": 30, "left": -130, "attrs": { "color": "orange", "label": "STATUS" } },
+    { "type": "wokwi-resistor", "id": "r1", "top": 110, "left": -150, "rotate": 90, "attrs": { "value": "220" } },
+    { "type": "wokwi-pushbutton", "id": "btn", "top": 200, "left": -150, "attrs": { "color": "blue", "label": "RECAL / SCENARIO" } }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "imu:VCC", "esp:3V3", "red", [] ],
+    [ "imu:GND", "esp:GND.2", "black", [] ],
+    [ "imu:SDA", "esp:21", "green", [] ],
+    [ "imu:SCL", "esp:22", "blue", [] ],
+    [ "esp:25", "led:A", "orange", [] ],
+    [ "led:C", "r1:1", "black", [] ],
+    [ "r1:2", "esp:GND.1", "black", [] ],
+    [ "btn:1.l", "esp:27", "gold", [] ],
+    [ "btn:2.l", "esp:GND.1", "black", [] ]
+  ],
+  "dependencies": {}
+}

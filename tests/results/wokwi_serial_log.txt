@@ -1,0 +1,59 @@
+VibeGuard on Wokwi (wokwi.com, board-esp32-devkit-c-v4 + wokwi-mpu6050), 5 Nov 2026.
+Serial monitor excerpts. Status lines print about once a second; "..." marks lines removed where nothing changed.
+Columns: [sim time] state fault health f1 rpm rms R=imbalance/looseness/bearing ratio, dsp = processFrame time on the simulated ESP32.
+
+===== Run 1: firmware before the hysteresis fix =====
+VibeGuard starting
+MPU6050 ready: +-4 g, DLPF 260 Hz, sampling Z at 500 Hz
+SIM scenario -> healthy (severity 1.00)
+WiFi: joining Wokwi-GUEST (simulation build)
+Learning the healthy baseline for 20 s...
+[    3.1s] CALIBRATING NONE      health=100.0% f1= 0.00Hz rpm=   0 rms= 29.3mg R=1.00/1.00/1.00 dsp=3260us calib=2/39
+...
+[   21.5s] CALIBRATING NONE      health=100.0% f1= 0.00Hz rpm=   0 rms= 29.3mg R=1.00/1.00/1.00 dsp=3257us calib=38/39
+[   22.5s] HEALTHY     NONE      health=100.0% f1=24.98Hz rpm=1499 rms= 28.9mg R=0.98/1.00/0.96 dsp=5263us
+[   25.6s] HEALTHY     NONE      health= 98.1% f1=24.98Hz rpm=1499 rms= 29.4mg R=1.00/0.99/1.06 dsp=5276us
+SIM scenario -> imbalance (severity 1.00)
+[   26.6s] HEALTHY     NONE      health= 41.9% f1=24.98Hz rpm=1499 rms= 85.8mg R=5.01/0.96/1.05 dsp=5061us
+[   27.6s] ALARM       IMBALANCE health= 29.7% f1=24.98Hz rpm=1499 rms= 85.7mg R=7.03/0.97/1.08 dsp=5019us
+[   29.7s] ALARM       IMBALANCE health= 22.7% f1=24.98Hz rpm=1499 rms= 84.6mg R=8.52/1.00/0.99 dsp=5254us
+SIM scenario -> looseness (severity 1.00)
+[   30.7s] ALARM       IMBALANCE health= 22.6% f1=24.98Hz rpm=1499 rms= 75.7mg R=8.55/1.58/0.99 dsp=5405us
+[   31.7s] WARNING     IMBALANCE health=  0.1% f1=24.98Hz rpm=1499 rms= 49.6mg R=4.92/15.94/1.03 dsp=4977us
+[   32.8s] ALARM       LOOSENESS health=  0.0% f1=24.98Hz rpm=1499 rms= 49.2mg R=3.14/22.59/1.00 dsp=4983us
+...
+[   66.5s] ALARM       LOOSENESS health=  0.0% f1=24.98Hz rpm=1499 rms= 48.5mg R=1.42/28.89/0.82 dsp=5193us
+SIM scenario -> bearing (severity 1.00)
+[   67.6s] ALARM       LOOSENESS health=  3.0% f1=24.98Hz rpm=1499 rms= 30.9mg R=1.21/14.74/3.06 dsp=5021us
+[   69.6s] WARNING     BEARING   health= 38.6% f1=24.98Hz rpm=1499 rms= 30.2mg R=1.04/4.31/5.48 dsp=5244us
+[   71.7s] ALARM       BEARING   health= 34.2% f1=24.98Hz rpm=1499 rms= 29.6mg R=0.98/1.91/6.20 dsp=5252us
+[   72.7s] WARNING     BEARING   health= 37.5% f1=24.98Hz rpm=1499 rms= 30.5mg R=0.99/1.51/5.66 dsp=5484us   <- flicker
+[   73.7s] ALARM       BEARING   health= 33.0% f1=24.98Hz rpm=1499 rms= 30.6mg R=0.99/1.27/6.41 dsp=5036us
+[   78.8s] WARNING     BEARING   health= 35.4% f1=24.98Hz rpm=1499 rms= 30.7mg R=0.99/1.13/5.99 dsp=5237us   <- flicker
+[   80.9s] ALARM       BEARING   health= 34.1% f1=24.98Hz rpm=1499 rms= 29.8mg R=0.98/1.00/6.21 dsp=5261us
+[   89.1s] WARNING     BEARING   health= 36.8% f1=24.98Hz rpm=1499 rms= 30.2mg R=0.99/1.06/5.77 dsp=5019us   <- flicker
+...      (14 of 46 bearing lines were WARNING, alternating with ALARM; 16 state changes)
+[  116.7s] WARNING     BEARING   health= 36.3% f1=24.98Hz rpm=1499 rms= 30.4mg R=1.01/1.00/5.85 dsp=5019us
+SIM scenario -> motor_off (severity 1.00)
+[  117.7s] MOTOR_OFF   NONE      health= 36.7% f1=24.98Hz rpm=1499 rms=  4.2mg R=0.94/1.03/5.79 dsp=3210us
+...
+[  146.4s] MOTOR_OFF   NONE      health= 36.7% f1=24.98Hz rpm=1499 rms=  4.0mg R=0.94/1.03/5.79 dsp=3424us
+SIM scenario -> healthy (severity 1.00)
+[  147.4s] HEALTHY     NONE      health= 47.7% f1=24.98Hz rpm=1499 rms= 23.4mg R=0.89/0.96/4.27 dsp=5046us
+[  149.5s] HEALTHY     NONE      health= 80.2% f1=24.98Hz rpm=1499 rms= 29.4mg R=0.96/0.97/1.73 dsp=5238us
+[  152.6s] HEALTHY     NONE      health= 98.6% f1=24.98Hz rpm=1499 rms= 29.1mg R=0.98/1.04/1.04 dsp=5245us
+...
+[  177.1s] HEALTHY     NONE      health= 98.1% f1=24.98Hz rpm=1499 rms= 29.1mg R=1.01/1.05/0.98 dsp=5250us
+{"state":"HEALTHY","fault":"NONE","health":98.1,"f1":24.98,"baseF1":24.98,"rpm":1499,"shaftFound":true,"rmsMg":29.12,"ratio":[1.014,1.054,0.985],"warn":[3.00,3.00,3.00],"alarm":[6.00,6.00,6.00],"energy":[9.847,0.5784,0.09878],"baseline":[9.857,0.4979,0.1004],"calib":{"done":39,"total":39,"rejected":0},"frames":342,"advice":{"action":"No action needed. Keep monitoring.","repair":0,"failure":0,"saving":0},"rt":{"uptimeMs":177564,"procUs":5250,"jitterUs":9339,"overruns":0,"i2cErrors":0},"sim":true,"scenario":"healthy","severity":1.00}
+
+===== Run 2: firmware with hysteresis (CLEAR_HYSTERESIS 0.8, ALARM_HYSTERESIS 0.85) =====
+[   22.5s] HEALTHY     NONE      health=100.0% f1=24.98Hz rpm=1499 rms= 28.9mg R=0.98/1.00/0.96 dsp=5263us
+SIM scenario -> bearing (severity 1.00)
+[   56.3s] HEALTHY     NONE      health= 69.4% f1=24.98Hz rpm=1499 rms= 29.4mg R=0.99/1.02/2.33 dsp=5244us
+[   57.3s] HEALTHY     NONE      health= 46.4% f1=24.98Hz rpm=1499 rms= 30.5mg R=1.00/1.09/4.42 dsp=5267us
+[   58.3s] WARNING     BEARING   health= 42.1% f1=24.98Hz rpm=1499 rms= 30.1mg R=0.99/1.11/4.97 dsp=5257us
+[   60.4s] WARNING     BEARING   health= 35.8% f1=24.98Hz rpm=1499 rms= 30.2mg R=1.00/1.17/5.93 dsp=5276us
+[   61.4s] ALARM       BEARING   health= 34.9% f1=24.98Hz rpm=1499 rms= 30.0mg R=1.00/1.15/6.07 dsp=5264us
+...      (49 bearing lines, 0 state changes after the first ALARM)
+[  105.5s] ALARM       BEARING   health= 34.3% f1=24.98Hz rpm=1499 rms= 30.5mg R=0.99/1.08/6.18 dsp=5051us
+{"state":"ALARM","fault":"BEARING","health":33.3,"f1":24.98,"baseF1":24.98,"rpm":1499,"shaftFound":true,"rmsMg":30.46,"ratio":[1.006,1.017,6.347],"warn":[3.00,3.00,3.00],"alarm":[6.00,6.00,6.00],"energy":[10.18,0.3336,0.6489],"baseline":[9.857,0.4979,0.1004],"calib":{"done":39,"total":39,"rejected":0},"frames":229,"advice":{"action":"Bearing wear: replace the bearing now, before it seizes and burns the winding.","repair":150,"failure":1800,"saving":1650},"rt":{"uptimeMs":119416,"procUs":5048,"jitterUs":9339,"overruns":0,"i2cErrors":0},"sim":true,"scenario":"bearing","severity":1.00}
